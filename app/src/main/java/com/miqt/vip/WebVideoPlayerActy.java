@@ -6,11 +6,12 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.miqt.vip.proxy.WebVideoPlayerActyProxy;
 import com.miqt.wand.activity.ProxyActivity;
 import com.miqt.wand.anno.BindProxy;
+import com.miqt.wand.anno.ParentalEntrustmentLevel;
 
 /**
  * Created by t54 on 2019/4/11.
  */
-@BindProxy(clazz = WebVideoPlayerActyProxy.class)
+@BindProxy(clazz = WebVideoPlayerActyProxy.class, level = ParentalEntrustmentLevel.NEVER)
 public class WebVideoPlayerActy extends ProxyActivity {
     public static void start(String url, boolean showMenu) {
         Intent intent = new Intent(ActivityUtils.getTopActivity(),

@@ -19,12 +19,12 @@ import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
 
 
-public class App extends Application {
+public class App extends Application implements Wand.MotorListener {
     @Override
     public void onCreate() {
         super.onCreate();
         Utils.init(this);
-        Wand.get().init(this);
+        Wand.get().init(this).listener(this);
         Bmob.initialize(this, "9de701ecbdf29f956d2d0a951cf9d66d");
         BmobQuery<HotFix> query = new BmobQuery<HotFix>();
         query.setLimit(1)
@@ -68,5 +68,20 @@ public class App extends Application {
                 }
             }
         });
+    }
+
+    @Override
+    public void initFinish() {
+        Log.d("wandfix", "initFinish");
+    }
+
+    @Override
+    public void initError(Throwable throwable) {
+        Log.e("wandfix", throwable.toString());
+    }
+
+    @Override
+    public void onNewPackAttach(File file) {
+        Log.d("wandfix", "new fix pack:" + file.getAbsolutePath());
     }
 }
