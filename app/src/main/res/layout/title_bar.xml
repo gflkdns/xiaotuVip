@@ -23,8 +23,8 @@
 
                 <ImageView
                     android:id="@+id/iv_lift"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="15dp"
                     android:padding="10dp"
                     app:srcCompat="@mipmap/back_new" />
@@ -40,7 +40,7 @@
                 android:maxEms="10"
                 android:singleLine="true"
                 android:textColor="@color/colorPrimary"
-                android:textSize="25dp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <LinearLayout
