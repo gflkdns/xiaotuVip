@@ -56,9 +56,9 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         mActy.setContentView(R.layout.activity_action);
-
-        if(!EasyPermissions.hasPermissions(mActy,perms)){
-            EasyPermissions.requestPermissions(mActy,"用户播放视频时的缓存",1,perms);
+        trySerTitleBar("首页");
+        if (!EasyPermissions.hasPermissions(mActy, perms)) {
+            EasyPermissions.requestPermissions(mActy, "用户播放视频时的缓存", 1, perms);
         }
 
         this.rv_list = mActy.findViewById(R.id.rv_list);

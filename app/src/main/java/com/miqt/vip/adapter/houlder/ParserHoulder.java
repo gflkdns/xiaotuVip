@@ -26,7 +26,7 @@ public class ParserHoulder extends THolder<ParserCfg> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebVideoPlayerActy.start(itemData.getUrl(), true);
+                WebVideoPlayerActy.Companion.start(itemData.getUrl(), true);
             }
         });
     }
