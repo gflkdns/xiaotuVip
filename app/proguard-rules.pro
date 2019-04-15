@@ -22,3 +22,7 @@
 -keepattributes EnclosingMethod
 -keepattributes InnerClasses
 
+-keep class com.miqt.wand.**{*;}
+-keep class * {@com.miqt.wand.anno.InjectObject <fields>;}
+-keep @com.miqt.wand.anno.AddToFixPatch class * {*;}
+-keep @com.miqt.wand.anno.BindProxy class * {*;}

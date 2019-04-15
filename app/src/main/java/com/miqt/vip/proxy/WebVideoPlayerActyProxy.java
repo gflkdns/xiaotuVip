@@ -72,6 +72,13 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         srl_layout = (SwipeRefreshLayout) mActy.findViewById(R.id.srl_layout);
         srl_layout.setOnRefreshListener(this);
         showProgressDialog("加载中...");
+        //如果10秒没加载完，直接关闭dialog
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissProgressDialog();
+            }
+        }, 10000);
         lv_parsers = mActy.findViewById(R.id.lv_parsers);
         dl_layout = mActy.findViewById(R.id.dl_layout);
         dl_layout.setDrawerLockMode(mActy.getIntent().getBooleanExtra("showMenu", false) ?
@@ -109,7 +116,6 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
 
     @Override
     public void onStop() {
-        webView.reload();
     }
 
     @Override
@@ -125,7 +131,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
 
     @Override
     public void onPause() {
-
+        webView.onPause();
     }
 
     /**

@@ -2,6 +2,8 @@ package com.miqt.vip.proxy;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ public class BaseProxy extends ActivityProxy {
     private ProgressDialog dialog;
     private View title_bar;
     private ViewHolder holder;
+    public Handler mHandler;
 
     public View getTitle_bar() {
         return title_bar;
@@ -36,6 +39,7 @@ public class BaseProxy extends ActivityProxy {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        mHandler = new Handler(Looper.getMainLooper());
         dialog = new ProgressDialog(mActy);
         trySerTitleBar("");
     }
@@ -61,8 +65,8 @@ public class BaseProxy extends ActivityProxy {
             return;
         } else {
             dialog.setMessage(meg);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCancelable(true);
             dialog.show();
         }
     }
