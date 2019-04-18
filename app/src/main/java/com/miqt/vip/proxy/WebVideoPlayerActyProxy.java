@@ -151,7 +151,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             webSettings.setMediaPlaybackRequiresUserGesture(true);
         }
-       // webSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
+        // webSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
 
         webView.setWebChromeClient(wvcc);
         webView.setWebViewClient(new MyWebClient());
@@ -211,6 +211,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
      **/
 
     private void showCustomView(View view, WebChromeClient.CustomViewCallback callback) {
+        mActy.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         // if a view already exists then immediately terminate the new one
         if (customView != null) {
             callback.onCustomViewHidden();
@@ -232,6 +233,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
      * 隐藏视频全屏
      */
     private void hideCustomView() {
+        mActy.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
         if (customView == null) {
             return;
         }
