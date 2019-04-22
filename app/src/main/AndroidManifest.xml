@@ -32,12 +32,13 @@
         </activity>
         <activity
             android:name=".WebVideoPlayerActy"
-            android:configChanges="orientation|screenSize"
-            android:hardwareAccelerated="true" />
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.miqt.vip.BmobContentProvider">
-        </provider>
+            android:authorities="com.miqt.vip.BmobContentProvider"></provider>
     </application>
 
 </manifest>

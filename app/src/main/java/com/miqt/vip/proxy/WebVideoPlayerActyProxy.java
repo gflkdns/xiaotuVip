@@ -3,6 +3,7 @@ package com.miqt.vip.proxy;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,10 +16,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
+
 import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -53,7 +57,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
     public static final FrameLayout.LayoutParams COVER_SCREEN_PARAMS = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private View customView;
     private FrameLayout fullscreenContainer;
-    private WebChromeClient.CustomViewCallback customViewCallback;
+    private IX5WebChromeClient.CustomViewCallback customViewCallback;
     private RecyclerView lv_parsers;
     private TAdapter parserAdapter;
     private DrawerLayout dl_layout;
@@ -69,6 +73,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         super.onCreate(bundle);
         url = mActy.getIntent().getStringExtra("url");//传进来视频链接
         mActy.setContentView(R.layout.activity_web);
+        mActy.getWindow().setFormat(PixelFormat.TRANSLUCENT);
         webView = (WebView) mActy.findViewById(R.id.webview);
         srl_layout = (SwipeRefreshLayout) mActy.findViewById(R.id.srl_layout);
         srl_layout.setOnRefreshListener(this);
@@ -171,7 +176,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         }
 
         @Override
-        public void onShowCustomView(View view, CustomViewCallback callback) {
+        public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback callback) {
             showCustomView(view, callback);
             mActy.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//播放时横屏幕，如果需要改变横竖屏，只需该参数就行了
 
@@ -193,6 +198,11 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
     public class MyWebClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            url = url.trim();
+            if (!url.startsWith("http")) {
+                url = url.replaceAll("([^\\s]+)(?=://)", "http");
+                return true;
+            }
             webView.loadUrl(url);
             showProgressDialog("加载中...");
             return true;
@@ -210,7 +220,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
      * 视频播放全屏
      **/
 
-    private void showCustomView(View view, WebChromeClient.CustomViewCallback callback) {
+    private void showCustomView(View view, IX5WebChromeClient.CustomViewCallback callback) {
         mActy.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         // if a view already exists then immediately terminate the new one
         if (customView != null) {

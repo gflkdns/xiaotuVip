@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.miqt.vip.bean.HotFix;
 import com.miqt.wand.Wand;
+import com.tencent.smtt.sdk.QbSdk;
 
 import java.io.File;
 import java.util.List;
@@ -25,7 +26,13 @@ public class App extends Application implements Wand.MotorListener {
         super.onCreate();
         Utils.init(this);
         Wand.get().init(this).listener(this);
+        QbSdk.preInit(this);
+        QbSdk.initX5Environment(this, null);
         Bmob.initialize(this, "9de701ecbdf29f956d2d0a951cf9d66d");
+        hotfix();
+    }
+
+    private void hotfix() {
         BmobQuery<HotFix> query = new BmobQuery<HotFix>();
         query.setLimit(1)
                 .addWhereEqualTo("debug", BuildConfig.DEBUG)
