@@ -147,7 +147,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         webSettings.setSupportZoom(true); // 支持缩放
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 不加载缓存内容
-        webSettings.setAppCacheEnabled(true);
+        webSettings.setAppCacheEnabled(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             webSettings.setMediaPlaybackRequiresUserGesture(true);
         }
