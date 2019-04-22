@@ -3,6 +3,7 @@ package com.miqt.vip.proxy;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,10 +73,10 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         url = mActy.getIntent().getStringExtra("url");//传进来视频链接
-        mActy.setContentView(R.layout.activity_web);
+        mActy.setContentView($("R.layout.activity_web"));
         mActy.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        webView = (WebView) mActy.findViewById(R.id.webview);
-        srl_layout = (SwipeRefreshLayout) mActy.findViewById(R.id.srl_layout);
+        webView = (WebView) mActy.findViewById($("R.id.webview"));
+        srl_layout = (SwipeRefreshLayout) mActy.findViewById($("R.id.srl_layout"));
         srl_layout.setOnRefreshListener(this);
         showProgressDialog("加载中...");
         //如果10秒没加载完，直接关闭dialog
@@ -85,14 +86,14 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
                 dismissProgressDialog();
             }
         }, 10000);
-        lv_parsers = mActy.findViewById(R.id.lv_parsers);
-        dl_layout = mActy.findViewById(R.id.dl_layout);
+        lv_parsers = mActy.findViewById($("R.id.lv_parsers"));
+        dl_layout = mActy.findViewById($("R.id.dl_layout"));
         dl_layout.setDrawerLockMode(mActy.getIntent().getBooleanExtra("showMenu", false) ?
                 DrawerLayout.LOCK_MODE_LOCKED_CLOSED : DrawerLayout.LOCK_MODE_UNLOCKED);
         lv_parsers.setLayoutManager(new LinearLayoutManager(mActy));
         data = new ArrayList();
-        parserAdapter = new TAdapter<>(data, mActy,
-                R.layout.item_parser, ParserHoulder.class);
+        parserAdapter = new TAdapter<>(data, mActy,$("R.layout.item_parser"),
+                ParserHoulder.class);
         lv_parsers.setAdapter(parserAdapter);
         initWebView();
         getdata();
@@ -271,7 +272,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
 
         public FullscreenHolder(Context ctx) {
             super(ctx);
-            setBackgroundColor(ctx.getResources().getColor(android.R.color.black));
+            setBackgroundColor(Color.BLACK);
         }
 
         @Override

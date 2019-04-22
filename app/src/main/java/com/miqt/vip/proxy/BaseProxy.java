@@ -46,7 +46,7 @@ public class BaseProxy extends ActivityProxy {
 
     public void trySerTitleBar(String title) {
         try {
-            title_bar = mActy.findViewById(R.id.title_bar);
+            title_bar = mActy.findViewById($("R.id.title_bar"));
             holder = new ViewHolder(title_bar);
             holder.tv_title.setText(title);
             holder.ll_lift.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,7 @@ public class BaseProxy extends ActivityProxy {
         }
     }
 
-    static class ViewHolder {
+     class ViewHolder {
         View view;
         ImageView iv_lift;
         LinearLayout ll_lift;
@@ -87,11 +87,11 @@ public class BaseProxy extends ActivityProxy {
 
         ViewHolder(View view) {
             this.view = view;
-            this.iv_lift = (ImageView) view.findViewById(R.id.iv_lift);
-            this.ll_lift = (LinearLayout) view.findViewById(R.id.ll_lift);
-            this.tv_title = (TextView) view.findViewById(R.id.tv_title);
-            this.iv_right = (ImageView) view.findViewById(R.id.iv_right);
-            this.ll_right = (LinearLayout) view.findViewById(R.id.ll_right);
+            this.iv_lift = (ImageView) view.findViewById($("R.id.iv_lift"));
+            this.ll_lift = (LinearLayout) view.findViewById($("R.id.ll_lift"));
+            this.tv_title = (TextView) view.findViewById($("R.id.tv_title"));
+            this.iv_right = (ImageView) view.findViewById($("R.id.iv_right"));
+            this.ll_right = (LinearLayout) view.findViewById($("R.id.ll_right"));
         }
     }
 }
