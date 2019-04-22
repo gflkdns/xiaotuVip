@@ -8,6 +8,7 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -92,7 +93,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
                 DrawerLayout.LOCK_MODE_LOCKED_CLOSED : DrawerLayout.LOCK_MODE_UNLOCKED);
         lv_parsers.setLayoutManager(new LinearLayoutManager(mActy));
         data = new ArrayList();
-        parserAdapter = new TAdapter<>(data, mActy,$("R.layout.item_parser"),
+        parserAdapter = new TAdapter<>(data, mActy, $("R.layout.item_parser"),
                 ParserHoulder.class);
         lv_parsers.setAdapter(parserAdapter);
         initWebView();
@@ -293,6 +294,8 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
                 /** 回退键 事件处理 优先级:视频播放全屏-网页回退-关闭页面 */
                 if (customView != null) {
                     hideCustomView();
+                } else if (dl_layout.isDrawerOpen(GravityCompat.START)) {
+                    dl_layout.closeDrawer(GravityCompat.START);
                 } else if (webView.canGoBack()) {
                     webView.goBack();
                 } else {
