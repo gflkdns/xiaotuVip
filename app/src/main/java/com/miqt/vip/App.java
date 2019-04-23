@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.miqt.vip.bean.HotFix;
 import com.miqt.wand.Wand;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 
 import java.io.File;
@@ -29,6 +30,7 @@ public class App extends Application implements Wand.MotorListener {
         QbSdk.preInit(this);
         QbSdk.initX5Environment(this, null);
         Bmob.initialize(this, "9de701ecbdf29f956d2d0a951cf9d66d");
+        CrashReport.initCrashReport(getApplicationContext(), "6d57bcf68c", true);
         hotfix();
     }
 
