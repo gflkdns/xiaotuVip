@@ -12,10 +12,10 @@ import com.miqt.wand.anno.ParentalEntrustmentLevel
  * 由于使用了wandfix activity代理，activity只需要声明一下就可以了，
  * 所以优化下项目结构，把所有的activity都放在这里声明即可
  */
-@BindProxy(clazz = ActionProxy::class, level = ParentalEntrustmentLevel.PROJECT)
+@BindProxy(clazz = ActionProxy::class, level = ParentalEntrustmentLevel.NEVER)
 class MainActivity : ProxyActivity()
 
-@BindProxy(clazz = WebVideoPlayerActyProxy::class, level = ParentalEntrustmentLevel.PROJECT)
+@BindProxy(clazz = WebVideoPlayerActyProxy::class, level = ParentalEntrustmentLevel.NEVER)
 class WebVideoPlayerActy : ProxyActivity() {
     companion object {
         fun start(url: String, showMenu: Boolean) {

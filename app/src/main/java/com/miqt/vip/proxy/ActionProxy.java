@@ -82,10 +82,11 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
         new AlertDialog.Builder(mActy)
                 .setTitle("使用方法")
                 .setMessage(
-                        "1. 打开一个视频平台。\n" +
+                        "本软件是一个可以免费看各大平台vip视频的软件，使用方法如下\n" +
+                                "1. 打开一个视频平台。\n" +
                                 "2. 打开想要观看的视频页面等待加载完成。\n" +
                                 "3. 屏幕向右滑出侧边栏，选择线路耐心等待一会解析加载结束播放就可以了。不同线路可能对平台的支持性不同，如果资源无法播放，可以多尝试其它的线路。\n" +
-                                "注意：app线路配置需要网络获取，因此请保持手机网络畅通。"
+                                "注意：视频解析线路配置需要网络获取，因此请保持手机网络畅通。"
                 )
                 .setNegativeButton("不在提示", new DialogInterface.OnClickListener() {
                     @Override
