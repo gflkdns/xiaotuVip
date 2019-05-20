@@ -76,7 +76,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         url = mActy.getIntent().getStringExtra("url");//传进来视频链接
         mActy.setContentView($("R.layout.activity_web"));
         mActy.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        webView = (WebView) mActy.findViewById($("R.id.webview"));
+        webView = (com.tencent.smtt.sdk.WebView) mActy.findViewById($("R.id.webview"));
         srl_layout = (SwipeRefreshLayout) mActy.findViewById($("R.id.srl_layout"));
         srl_layout.setOnRefreshListener(this);
         showProgressDialog("加载中...");
