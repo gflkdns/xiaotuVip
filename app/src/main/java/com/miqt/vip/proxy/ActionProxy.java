@@ -174,12 +174,17 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
 
     private void update(HttpClient.Resp resp) {
         Gson gson = new Gson();
-        List<Action> object = gson.fromJson(resp.content, new TypeToken<List<Action>>() {
+        final List<Action> object = gson.fromJson(resp.content, new TypeToken<List<Action>>() {
         }.getType());
         if (object != null && object.size() > 0) {
-            data.clear();
-            data.addAll(object);
-            adapter.notifyDataSetChanged();
+            mActy.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    data.clear();
+                    data.addAll(object);
+                    adapter.notifyDataSetChanged();
+                }
+            });
         } else {
             ToastUtils.showShort("获取平台信息失败：" + resp.code);
         }

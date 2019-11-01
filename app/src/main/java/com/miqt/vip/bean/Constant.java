@@ -270,8 +270,8 @@ public class Constant {
             "]";
 
 
-    public static final String PARS_URL = "https://raw.githubusercontent.com/miqt/xiaotuVip/master/parcfg.json";
-    public static final String ACTION_UTL = "https://raw.githubusercontent.com/miqt/xiaotuVip/master/action.json";
+    public static final String PARS_URL = "https://miqt.github.io/xiaotuVip/parcfg.json";
+    public static final String ACTION_UTL = "https://miqt.github.io/xiaotuVip/action.json";
     public static final String ACTION_CONTENT = "[\n" +
             "  {\n" +
             "    \"name\": \"爱奇艺\",\n" +

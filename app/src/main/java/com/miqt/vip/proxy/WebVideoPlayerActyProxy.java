@@ -121,12 +121,17 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
 
     private void update(HttpClient.Resp resp) {
         Gson gson = new Gson();
-        List<ParserCfg> object = gson.fromJson(resp.content, new TypeToken<List<ParserCfg>>() {
+        final List<ParserCfg> object = gson.fromJson(resp.content, new TypeToken<List<ParserCfg>>() {
         }.getType());
         if (object != null && object.size() > 0) {
-            data.clear();
-            data.addAll(object);
-            parserAdapter.notifyDataSetChanged();
+            mActy.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    data.clear();
+                    data.addAll(object);
+                    parserAdapter.notifyDataSetChanged();
+                }
+            });
         } else {
             ToastUtils.showShort("获取解析器失败：" + resp.code);
         }
