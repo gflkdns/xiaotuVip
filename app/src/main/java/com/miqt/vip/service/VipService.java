@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 
 public class VipService extends Service {
     private String CHANNEL_ID = "sdk_channel_id";
-    private String CHANNEL_NAME = "保活";
+    private String CHANNEL_NAME = "保活的_不占资源求放过";
 
     @Nullable
     @Override

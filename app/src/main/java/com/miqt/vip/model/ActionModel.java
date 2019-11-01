@@ -9,7 +9,6 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by t54 on 2019/4/4.
@@ -32,19 +31,23 @@ public class ActionModel {
                 "芒果视频",
                 "https://www.mgtv.com/",
                 "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=199783531,2798712360&fm=179&app=42&f=JPEG?w=56&h=56");
-        BmobQuery<Action> query = new BmobQuery<>();
-        query
-                .findObjects(new FindListener<Action>() {
-                    @Override
-                    public void done(List<Action> object, BmobException e) {
-                        if (e == null) {
-                            result.clear();
-                            result.addAll(object);
-                        } else {
-                            ToastUtils.showShort("获取平台信息失败：" + e.getMessage());
+        try {
+            BmobQuery<Action> query = new BmobQuery<>();
+            query
+                    .findObjects(new FindListener<Action>() {
+                        @Override
+                        public void done(List<Action> object, BmobException e) {
+                            if (e == null) {
+                                result.clear();
+                                result.addAll(object);
+                            } else {
+                                ToastUtils.showShort("获取平台信息失败：" + e.getMessage());
+                            }
                         }
-                    }
-                });
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Action> getActions() {

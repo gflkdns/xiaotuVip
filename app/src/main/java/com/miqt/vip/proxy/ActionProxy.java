@@ -13,8 +13,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-
-import com.miqt.vip.R;
 import com.miqt.vip.adapter.TAdapter;
 import com.miqt.vip.adapter.houlder.ActionHolder;
 import com.miqt.vip.bean.Action;
@@ -46,7 +44,10 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.WAKE_LOCK,
             Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.INTERNET,
+            Manifest.permission.INTERNET
+            , Manifest.permission.ACCESS_FINE_LOCATION
+            , Manifest.permission.ACCESS_COARSE_LOCATION
+            , Manifest.permission.WRITE_SETTINGS
     };
 
     public ActionProxy(ProxyActivity acty) {
@@ -66,7 +67,7 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
 
         rv_list.setLayoutManager(new GridLayoutManager(mActy, 4));
         data = new ArrayList<>();
-        adapter = new TAdapter<>(data, mActy,$(" R.layout.item_action"), ActionHolder.class);
+        adapter = new TAdapter<>(data, mActy, $(" R.layout.item_action"), ActionHolder.class);
         rv_list.setAdapter(adapter);
         ref_layout.setOnRefreshListener(this);
 
@@ -148,19 +149,27 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
     }
 
     private void getData() {
-        BmobQuery<Action> query = new BmobQuery<>();
-        query.findObjects(new ActionFindListener());
+        try {
+            BmobQuery<Action> query = new BmobQuery<>();
+            query.findObjects(new ActionFindListener());
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     public class ActionFindListener extends FindListener<Action> {
         @Override
         public void done(List<Action> object, BmobException e) {
-            if (e == null) {
-                data.clear();
-                data.addAll(object);
-                adapter.notifyDataSetChanged();
-            } else {
-                ToastUtils.showShort("获取平台信息失败：" + e.getMessage());
+            try {
+                if (e == null) {
+                    data.clear();
+                    data.addAll(object);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    ToastUtils.showShort("获取平台信息失败：" + e.getMessage());
+                }
+            } catch (Throwable e1) {
+                e1.printStackTrace();
             }
         }
     }

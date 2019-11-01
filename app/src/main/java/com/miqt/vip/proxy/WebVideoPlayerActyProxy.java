@@ -101,20 +101,24 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
     }
 
     private void getdata() {
-        BmobQuery<ParserCfg> query = new BmobQuery<>();
-        query.order("-createdAt")
-                .findObjects(new FindListener<ParserCfg>() {
-                    @Override
-                    public void done(List<ParserCfg> object, BmobException e) {
-                        if (e == null) {
-                            data.clear();
-                            data.addAll(object);
-                            parserAdapter.notifyDataSetChanged();
-                        } else {
-                            ToastUtils.showShort("获取解析器失败：" + e.getMessage());
+        try {
+            BmobQuery<ParserCfg> query = new BmobQuery<>();
+            query.order("-createdAt")
+                    .findObjects(new FindListener<ParserCfg>() {
+                        @Override
+                        public void done(List<ParserCfg> object, BmobException e) {
+                            if (e == null) {
+                                data.clear();
+                                data.addAll(object);
+                                parserAdapter.notifyDataSetChanged();
+                            } else {
+                                ToastUtils.showShort("获取解析器失败：" + e.getMessage());
+                            }
                         }
-                    }
-                });
+                    });
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
