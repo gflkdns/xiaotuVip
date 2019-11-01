@@ -45,8 +45,28 @@
     "url": "http://www.yy4080.com/"
   },
   {
-    "name": "4080新视觉影院",
-    "image": "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=673362516,1961059122&fm=85&app=79&f=JPG?w=121&h=75&s=36F7EC36ED746C0152DC29FE0300C033",
-    "url": "http://www.yy4080.com/"
+    "name": "咪咕",
+    "image": "https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=870288191,3765675962&fm=202&mola=new&crop=v1",
+    "url": "http://www.migu.cn/"
+  },
+  {
+    "name": "pptv",
+    "image": "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2552131531,889738107&fm=58&s=CC87C712CDB7EE114E6B8546020070BB&bpow=121&bpoh=75",
+    "url": "http://www.pptv.com/"
+  },
+  {
+    "name": "土豆",
+    "image": "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3084383971,4168651777&fm=96",
+    "url": "https://www.tudou.com/"
+  },
+  {
+    "name": "1905",
+    "image": "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1438387924,2210735467&fm=58&s=2132CC32CDA54C03144140D6000050B0&bpow=121&bpoh=75",
+    "url": "http://www.1905.com/"
+  },
+  {
+    "name": "哔哩哔哩",
+    "image": "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2810627290,1080409091&fm=58&s=8197C732C535FA313E526557030030BB&bpow=121&bpoh=75",
+    "url": "https://www.bilibili.com/"
   }
 ]
