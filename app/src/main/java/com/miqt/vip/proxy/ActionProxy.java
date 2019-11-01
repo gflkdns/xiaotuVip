@@ -10,21 +10,23 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.miqt.vip.adapter.TAdapter;
 import com.miqt.vip.adapter.houlder.ActionHolder;
 import com.miqt.vip.bean.Action;
+import com.miqt.vip.bean.Constant;
+import com.miqt.vip.utils.HttpClient;
 import com.miqt.wand.activity.ProxyActivity;
 import com.miqt.wand.anno.AddToFixPatch;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
@@ -149,28 +151,33 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
     }
 
     private void getData() {
+        String parcog = com.miqt.wand.utils.SPUtils.get(mActy, "ACTION_CONTENT");
+        if (TextUtils.isEmpty(parcog)) {
+            parcog = Constant.ACTION_CONTENT;
+        }
+        update(new HttpClient.Resp(200, parcog));
         try {
-            BmobQuery<Action> query = new BmobQuery<>();
-            query.findObjects(new ActionFindListener());
+            HttpClient.Resp resp = HttpClient.get(Constant.ACTION_UTL).happy();
+            if (resp.code == 200) {
+                com.miqt.wand.utils.SPUtils.put(mActy, "ACTION_CONTENT", resp.content);
+                update(resp);
+            }
         } catch (Throwable e) {
             e.printStackTrace();
         }
     }
 
-    public class ActionFindListener extends FindListener<Action> {
-        @Override
-        public void done(List<Action> object, BmobException e) {
-            try {
-                if (e == null) {
-                    data.clear();
-                    data.addAll(object);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    ToastUtils.showShort("获取平台信息失败：" + e.getMessage());
-                }
-            } catch (Throwable e1) {
-                e1.printStackTrace();
-            }
+    private void update(HttpClient.Resp resp) {
+        Gson gson = new Gson();
+        List<Action> object = gson.fromJson(resp.content, new TypeToken<List<Action>>() {
+        }.getType());
+        if (object != null && object.size() > 0) {
+            data.clear();
+            data.addAll(object);
+            adapter.notifyDataSetChanged();
+        } else {
+            ToastUtils.showShort("获取平台信息失败：" + resp.code);
         }
     }
+
 }

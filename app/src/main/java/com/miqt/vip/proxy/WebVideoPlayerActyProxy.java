@@ -13,36 +13,33 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.miqt.vip.adapter.TAdapter;
+import com.miqt.vip.adapter.houlder.ParserHoulder;
+import com.miqt.vip.bean.Constant;
+import com.miqt.vip.bean.ParserCfg;
+import com.miqt.vip.utils.HttpClient;
+import com.miqt.wand.activity.ProxyActivity;
+import com.miqt.wand.anno.AddToFixPatch;
+import com.miqt.wand.utils.SPUtils;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
-import android.widget.FrameLayout;
-
-import com.blankj.utilcode.util.ToastUtils;
-
-import com.miqt.vip.R;
-import com.miqt.vip.adapter.TAdapter;
-import com.miqt.vip.adapter.houlder.ParserHoulder;
-import com.miqt.vip.adapter.houlder.THolder;
-import com.miqt.vip.bean.ParserCfg;
-import com.miqt.wand.activity.ProxyActivity;
-import com.miqt.wand.anno.AddToFixPatch;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by t54 on 2019/4/4.
@@ -101,23 +98,32 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
     }
 
     private void getdata() {
+        String parcog = SPUtils.get(mActy, "parcog");
+        if (TextUtils.isEmpty(parcog)) {
+            parcog = Constant.parcog;
+        }
+        update(new HttpClient.Resp(200, parcog));
         try {
-            BmobQuery<ParserCfg> query = new BmobQuery<>();
-            query.order("-createdAt")
-                    .findObjects(new FindListener<ParserCfg>() {
-                        @Override
-                        public void done(List<ParserCfg> object, BmobException e) {
-                            if (e == null) {
-                                data.clear();
-                                data.addAll(object);
-                                parserAdapter.notifyDataSetChanged();
-                            } else {
-                                ToastUtils.showShort("获取解析器失败：" + e.getMessage());
-                            }
-                        }
-                    });
+            HttpClient.Resp resp = HttpClient.get(Constant.PARS_URL).happy();
+            if (resp.code == 200) {
+                SPUtils.put(mActy, "parcog", resp.content);
+                update(resp);
+            }
         } catch (Throwable e) {
             e.printStackTrace();
+        }
+    }
+
+    private void update(HttpClient.Resp resp) {
+        Gson gson = new Gson();
+        List<ParserCfg> object = gson.fromJson(resp.content, new TypeToken<List<ParserCfg>>() {
+        }.getType());
+        if (object != null && object.size() > 0) {
+            data.clear();
+            data.addAll(object);
+            parserAdapter.notifyDataSetChanged();
+        } else {
+            ToastUtils.showShort("获取解析器失败：" + resp.code);
         }
     }
 

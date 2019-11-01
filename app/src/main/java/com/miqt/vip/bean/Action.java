@@ -1,14 +1,12 @@
 package com.miqt.vip.bean;
 
 
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobObject;
 
 /**
  * Created by t54 on 2019/4/3.
  */
 
-public class Action extends BmobObject {
+public class Action  {
     String name;
     String url;
     String image;

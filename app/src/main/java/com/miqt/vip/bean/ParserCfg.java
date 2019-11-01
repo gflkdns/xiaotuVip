@@ -1,12 +1,11 @@
 package com.miqt.vip.bean;
 
-import cn.bmob.v3.BmobObject;
 
 /**
  * Created by t54 on 2019/4/4.
  */
 
-public class ParserCfg extends BmobObject {
+public class ParserCfg {
     String url;
     String targetUrl;
     String name;
