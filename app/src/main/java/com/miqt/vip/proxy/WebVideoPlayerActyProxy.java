@@ -98,20 +98,25 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
     }
 
     private void getdata() {
-        String parcog = SPUtils.get(mActy, "parcog");
-        if (TextUtils.isEmpty(parcog)) {
-            parcog = Constant.parcog;
-        }
-        update(new HttpClient.Resp(200, parcog));
-        try {
-            HttpClient.Resp resp = HttpClient.get(Constant.PARS_URL).happy();
-            if (resp.code == 200) {
-                SPUtils.put(mActy, "parcog", resp.content);
-                update(resp);
+        new Thread() {
+            @Override
+            public void run() {
+                String parcog = SPUtils.get(mActy, "parcog");
+                if (TextUtils.isEmpty(parcog)) {
+                    parcog = Constant.parcog;
+                }
+                update(new HttpClient.Resp(200, parcog));
+                try {
+                    HttpClient.Resp resp = HttpClient.get(Constant.PARS_URL).happy();
+                    if (resp.code == 200) {
+                        SPUtils.put(mActy, "parcog", resp.content);
+                        update(resp);
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
+        }.start();
     }
 
     private void update(HttpClient.Resp resp) {

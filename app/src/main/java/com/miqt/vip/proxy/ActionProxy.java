@@ -151,20 +151,25 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
     }
 
     private void getData() {
-        String parcog = com.miqt.wand.utils.SPUtils.get(mActy, "ACTION_CONTENT");
-        if (TextUtils.isEmpty(parcog)) {
-            parcog = Constant.ACTION_CONTENT;
-        }
-        update(new HttpClient.Resp(200, parcog));
-        try {
-            HttpClient.Resp resp = HttpClient.get(Constant.ACTION_UTL).happy();
-            if (resp.code == 200) {
-                com.miqt.wand.utils.SPUtils.put(mActy, "ACTION_CONTENT", resp.content);
-                update(resp);
+        new Thread() {
+            @Override
+            public void run() {
+                String parcog = com.miqt.wand.utils.SPUtils.get(mActy, "ACTION_CONTENT");
+                if (TextUtils.isEmpty(parcog)) {
+                    parcog = Constant.ACTION_CONTENT;
+                }
+                update(new HttpClient.Resp(200, parcog));
+                try {
+                    HttpClient.Resp resp = HttpClient.get(Constant.ACTION_UTL).happy();
+                    if (resp.code == 200) {
+                        com.miqt.wand.utils.SPUtils.put(mActy, "ACTION_CONTENT", resp.content);
+                        update(resp);
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
+        }.start();
     }
 
     private void update(HttpClient.Resp resp) {
