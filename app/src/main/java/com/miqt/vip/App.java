@@ -1,12 +1,14 @@
 package com.miqt.vip;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.miqt.vip.bean.HotFix;
+import com.miqt.vip.service.VipService;
 import com.miqt.wand.Wand;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
@@ -32,6 +34,9 @@ public class App extends Application implements Wand.MotorListener {
         Bmob.initialize(this, "9de701ecbdf29f956d2d0a951cf9d66d");
         CrashReport.initCrashReport(getApplicationContext(), "6d57bcf68c", true);
         hotfix();
+
+        Intent intent = new Intent(this, VipService.class);
+        startService(intent);
     }
 
     private void hotfix() {
