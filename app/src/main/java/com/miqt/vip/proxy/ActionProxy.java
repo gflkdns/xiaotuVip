@@ -25,6 +25,7 @@ import com.miqt.vip.utils.HttpClient;
 import com.miqt.vip.utils.USMUtils;
 import com.miqt.wand.activity.ProxyActivity;
 import com.miqt.wand.anno.AddToFixPatch;
+import com.tencent.bugly.Bugly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,8 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
 
         getData();
 
-        showTS();
+
+        //  showTS();
 
         if (Build.VERSION.SDK_INT >= 21) {
             if (USMUtils.isNoOption(mActy) && USMUtils.isNoSwitch(mActy)) {
@@ -87,20 +89,21 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
                 new AlertDialog.Builder(mActy)
                         .setTitle("提示")
                         .setMessage(
-                                "能否请您打开辅助功能,帮助我们更好的完善产品?\n这对您的使用无任何影响,但对我们却至关重要." +
-                                        "打开方式:点下发去打开,然后找到小埋Vip点击打开就好了,谢谢"
+                                "即将打开授权页,请您按照以下设置 ↓ " +
+                                        "\n打开方式:在跳转列表找到小埋Vip点击打开就好了"
                         )
-                        .setNegativeButton("不在提示", new DialogInterface.OnClickListener() {
+//                        .setNegativeButton("不在提示", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                SPUtils.getInstance().put("isShowUSM", false);
+//                            }
+//                        })
+                        .setPositiveButton("去打开", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SPUtils.getInstance().put("isShowUSM", false);
+                                USMUtils.openUSMSetting(mActy);
                             }
-                        }).setPositiveButton("去打开", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        USMUtils.openUSMSetting(mActy);
-                    }
-                }).create().show();
+                        }).create().show();
 
             }
         }
