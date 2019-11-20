@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,10 +21,8 @@ import com.miqt.vip.adapter.houlder.ActionHolder;
 import com.miqt.vip.bean.Action;
 import com.miqt.vip.bean.Constant;
 import com.miqt.vip.utils.HttpClient;
-import com.miqt.vip.utils.USMUtils;
 import com.miqt.wand.activity.ProxyActivity;
 import com.miqt.wand.anno.AddToFixPatch;
-import com.tencent.bugly.Bugly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,34 +76,34 @@ public class ActionProxy extends BaseProxy implements SwipeRefreshLayout.OnRefre
         getData();
 
 
-        //  showTS();
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            if (USMUtils.isNoOption(mActy) && USMUtils.isNoSwitch(mActy)) {
-                if (!SPUtils.getInstance().getBoolean("isShowUSM", true)) {
-                    return;
-                }
-                new AlertDialog.Builder(mActy)
-                        .setTitle("提示")
-                        .setMessage(
-                                "即将打开授权页,请您按照以下设置 ↓ " +
-                                        "\n打开方式:在跳转列表找到小埋Vip点击打开就好了"
-                        )
-//                        .setNegativeButton("不在提示", new DialogInterface.OnClickListener() {
+//        showTS();
+//
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            if (USMUtils.isNoOption(mActy) && USMUtils.isNoSwitch(mActy)) {
+//                if (!SPUtils.getInstance().getBoolean("isShowUSM", true)) {
+//                    return;
+//                }
+//                new AlertDialog.Builder(mActy)
+//                        .setTitle("提示")
+//                        .setMessage(
+//                                "即将打开授权页,请您按照以下设置 ↓ " +
+//                                        "\n打开方式:在跳转列表找到小埋Vip点击打开就好了"
+//                        )
+////                        .setNegativeButton("不在提示", new DialogInterface.OnClickListener() {
+////                            @Override
+////                            public void onClick(DialogInterface dialog, int which) {
+////                                SPUtils.getInstance().put("isShowUSM", false);
+////                            }
+////                        })
+//                        .setPositiveButton("去打开", new DialogInterface.OnClickListener() {
 //                            @Override
 //                            public void onClick(DialogInterface dialog, int which) {
-//                                SPUtils.getInstance().put("isShowUSM", false);
+//                                USMUtils.openUSMSetting(mActy);
 //                            }
-//                        })
-                        .setPositiveButton("去打开", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                USMUtils.openUSMSetting(mActy);
-                            }
-                        }).create().show();
-
-            }
-        }
+//                        }).create().show();
+//
+//            }
+//        }
     }
 
     private void showTS() {

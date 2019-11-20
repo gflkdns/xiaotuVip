@@ -31,7 +31,7 @@ public class ActionHolder extends THolder<Action> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebVideoPlayerActy.Companion.start(itemData.getUrl(),false);
+                WebVideoPlayerActy.Companion.start(itemData.getUrl(),true);
             }
         });
     }

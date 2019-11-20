@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
@@ -62,6 +63,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
     private DrawerLayout dl_layout;
     private List<ParserCfg> data;
     private SwipeRefreshLayout srl_layout;
+    private ImageView iv_player;
 
     public WebVideoPlayerActyProxy(ProxyActivity acty) {
         super(acty);
@@ -75,6 +77,15 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         mActy.getWindow().setFormat(PixelFormat.TRANSLUCENT);
         webView = (com.tencent.smtt.sdk.WebView) mActy.findViewById($("R.id.webview"));
         srl_layout = (SwipeRefreshLayout) mActy.findViewById($("R.id.srl_layout"));
+        iv_player = (ImageView) mActy.findViewById($("R.id.iv_player"));
+        iv_player.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!dl_layout.isDrawerOpen(GravityCompat.START)) {
+                    dl_layout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
         srl_layout.setOnRefreshListener(this);
         showProgressDialog("加载中...");
         //如果10秒没加载完，直接关闭dialog
@@ -86,7 +97,13 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         }, 10000);
         lv_parsers = mActy.findViewById($("R.id.lv_parsers"));
         dl_layout = mActy.findViewById($("R.id.dl_layout"));
-        dl_layout.setDrawerLockMode(mActy.getIntent().getBooleanExtra("showMenu", false) ?
+        boolean showMenu = mActy.getIntent().getBooleanExtra("showMenu", false);
+        if (showMenu){
+            iv_player.setVisibility(View.VISIBLE);
+        }else{
+            iv_player.setVisibility(View.GONE);
+        }
+        dl_layout.setDrawerLockMode(!showMenu ?
                 DrawerLayout.LOCK_MODE_LOCKED_CLOSED : DrawerLayout.LOCK_MODE_UNLOCKED);
         lv_parsers.setLayoutManager(new LinearLayoutManager(mActy));
         data = new ArrayList();
@@ -95,6 +112,19 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
         lv_parsers.setAdapter(parserAdapter);
         initWebView();
         getdata();
+        dl_layout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                iv_player.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                iv_player.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void getdata() {
@@ -225,6 +255,7 @@ public class WebVideoPlayerActyProxy extends BaseProxy implements SwipeRefreshLa
                 url = url.replaceAll("([^\\s]+)(?=://)", "http");
                 return true;
             }
+
             webView.loadUrl(url);
             showProgressDialog("加载中...");
             return true;
