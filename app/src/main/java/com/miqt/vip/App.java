@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
 
-import com.analysys.track.AnalysysTracker;
 import com.blankj.utilcode.util.Utils;
 import com.miqt.vip.service.VipService;
 import com.miqt.wand.Wand;
@@ -29,8 +28,8 @@ public class App extends Application implements Wand.MotorListener {
         Intent intent = new Intent(this, VipService.class);
         startService(intent);
 
-        AnalysysTracker.init(this, "7752552892442721d", "xiaotuvip");
-        AnalysysTracker.setDebugMode(this, true);
+//        AnalysysTracker.init(this, "7752552892442721d", "xiaotuvip");
+//        AnalysysTracker.setDebugMode(this, true);
     }
 
     private void hotfix() {
